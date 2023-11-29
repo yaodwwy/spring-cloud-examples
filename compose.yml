@@ -1,0 +1,79 @@
+services:
+
+  postgresql:
+    restart: always
+    hostname: postgresql
+    container_name: postgresql
+    image: 'bitnami/postgresql:latest'
+    privileged: true
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRESQL_USERNAME=postgres
+      - POSTGRESQL_PASSWORD=password123
+      - POSTGRESQL_DATABASE=my_database
+
+    volumes:
+      - 'postgresql_data:/bitnami/postgresql'
+
+  redis:
+    restart: always
+    container_name: redis
+    hostname: host.docker.internal
+    image: 'bitnami/redis:latest'
+    command: /opt/bitnami/scripts/redis/run.sh --maxmemory 500mb
+    volumes:
+      - redis_data:/bitnami/redis/data
+    ports:
+      - "6379:6379"
+    environment:
+      REDIS_PASSWORD: password123
+#
+#  kafka:
+#    container_name: kafka
+#    hostname: host.docker.internal
+#    image: 'bitnami/kafka:latest'
+#    ports:
+#      - "6092:6092"
+#    environment:
+#      KAFKA_BROKER_ID: 0
+#      ALLOW_PLAINTEXT_LISTENER: yes
+#      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+#      #      KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
+#      #      KAFKA_JMX_PORT: 49999
+#      KAFKA_CFG_NODE_ID: 0
+#      KAFKA_CFG_PROCESS_ROLES: controller,broker
+#      KAFKA_CFG_LISTENERS: PLAINTEXT://:6092,CONTROLLER://:6093
+#      KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP: CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT
+#      KAFKA_CFG_CONTROLLER_QUORUM_VOTERS: 0@kafka:6093
+#      KAFKA_CFG_CONTROLLER_LISTENER_NAMES: CONTROLLER
+#
+#  kafka-ui:
+#    restart: always
+#    hostname: kafka-ui
+#    container_name: kafka-ui
+#    image: provectuslabs/kafka-ui:v0.7.1
+#    extra_hosts:
+#      - "adam-pc:10.0.9.25"
+#    ports:
+#      - "8080:8080"
+#    environment:
+#      - KAFKA_CLUSTERS_0_NAME=adam-pc
+#      - KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS=adam-pc:6092
+#      #- KAFKA_CLUSTERS_0_READONLY=true
+#
+#  zookeeper:
+#    hostname: zookeeper
+#    container_name: zookeeper
+#    image: bitnami/zookeeper:3.8.2
+#    restart: always
+#    ports:
+#      - "2181:2181"
+#    environment:
+#      ZOOKEEPER_CLIENT_PORT: 2181
+#      ZOOKEEPER_TICK_TIME: 2000
+#      ALLOW_ANONYMOUS_LOGIN: yes
+#
+volumes:
+  redis_data:
+  postgresql_data:

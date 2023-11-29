@@ -1,0 +1,69 @@
+server:
+  port: 7070
+
+logging:
+  level:
+    root: INFO
+    org.springframework.web: INFO
+    org.springframework.security: DEBUG
+    org.springframework.security.oauth2: DEBUG
+    sample.add.IamAccessTokenFeignApi: DEBUG
+
+#security:
+#  oauth2:
+#    client:
+#      client-id: ${CLIENT_ID:pm-client} #自定义环境变量
+#      client-secret: ${CLIENT_ID:pm-client} #自定义环境变量
+#      access-token-uri: http://127.0.0.1:12000/oauth/token    #获取token 地址
+#      user-authorization-uri: http://127.0.0.1:12000/oauth/authorize  # 认证跳转地址
+#    resource:
+#      id: ${spring.application.name}
+#      jwt:
+#        key-uri: http://127.0.0.1:12000/oauth/token_key
+
+spring:
+  thymeleaf:
+    cache: false
+  security:
+    oauth2:
+      client:
+        registration:
+          pm-client:
+            provider: iam
+            authorization-grant-type: authorization_code
+            scope: openid, profile, user_read
+            client-name: pm-client
+            client-id: ${CLIENT_ID:pm-client}
+            client-secret: ${CLIENT_SECRET:pm-secret}
+            redirect-uri: http://127.0.0.1:7070/oauth2/login-iam
+        provider:
+          iam:
+            issuer-uri: http://127.0.0.1:9000
+      resourceserver:
+        jwt:
+          issuer-uri: http://127.0.0.1:9000
+justauth:
+  enabled: true
+  extend:
+    enum-class: sample.extend.AuthCustomSource
+    config:
+      IAM:
+        request-class: sample.extend.AuthIamRequest
+        client-id: pm-client
+        client-secret: pm-secret
+        redirect-uri: http://127.0.0.1:7070/oauth2/login-iam
+
+
+
+#OAuth2Host:
+#OAuth2Logout: ${OAuth2Host}/logout
+#security:
+#  oauth2:
+#    authorization:
+#      check-token-access: ${OAuth2Host}/oauth/check_token
+#    client:
+#      access-token-uri: ${OAuth2Host}/oauth2/token
+#      user-authorization-uri: ${OAuth2Host}/oauth2/authorize
+#    resource:
+#      id: ${spring.application.name}
+#      user-info-uri: ${OAuth2Host}/user

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Spring 授权服务器示例</title>
+    <link rel="stylesheet" href="/webjars/bootstrap/css/bootstrap.css" th:href="@{/webjars/bootstrap/css/bootstrap.css}" />
+    <link rel="stylesheet" href="/assets/css/signin.css" th:href="@{/assets/css/signin.css}" />
+</head>
+<body>
+<div class="container">
+    <form class="form-signin w-100 m-auto" method="post" th:action="@{/login}">
+        <div th:if="${param.error}" class="alert alert-danger" role="alert">
+            用户名或密码无效。
+        </div>
+        <div th:if="${param.logout}" class="alert alert-success" role="alert">
+            您已被注销。
+        </div>
+        <h1 class="h3 mb-3 fw-normal">请登录</h1>
+        <div class="form-floating">
+            <input type="text" id="username" th:value="user1" name="username" class="form-control" required autofocus>
+            <label for="username">Username</label>
+        </div>
+        <div class="form-floating">
+            <input type="password" id="password" th:value="password" name="password" class="form-control" required>
+            <label for="password">Password</label>
+        </div>
+        <div>
+            <button class="w-100 btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+            <a class="w-100 btn btn-light btn-block bg-white" href="http://127.0.0.1:7070/login-iam" role="link" style="margin-top: 10px">
+                <img src="/assets/img/google.png" th:src="@{/assets/img/devices.png}" width="20" style="margin-right: 5px;" alt="Sign in with IAM">
+                使用 IAM 帐号登录 PM
+            </a>
+            <a class="w-100 btn btn-light btn-block bg-white" href="/oauth2/authorization/google-idp" role="link" style="margin-top: 10px">
+                <img src="/assets/img/google.png" th:src="@{/assets/img/google.png}" width="20" style="margin-right: 5px;" alt="Sign in with Google">
+                使用 Google 帐号登录
+            </a>
+            <a class="w-100 btn btn-light btn-block bg-white" href="/oauth2/authorization/github-idp" role="link" style="margin-top: 10px">
+                <img src="/assets/img/github.png" th:src="@{/assets/img/github.png}" width="24" style="margin-right: 5px;" alt="Sign in with Github">
+                使用 Github 登录
+            </a>
+        </div>
+    </form>
+</div>
+</body>
+</html>

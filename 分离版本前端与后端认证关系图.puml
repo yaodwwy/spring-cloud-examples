@@ -1,0 +1,25 @@
+@startuml
+'https://plantuml.com/use-case-diagram
+
+:User:
+note right of User : resource owner
+
+(resource server) as RS
+(client) as UI
+(authorization server) as AS
+
+note right of UI : arco-pro-ui as a Client
+note right of RS : messages-resource \n demo-backend \n as a resource server
+note right of AS : iam as a authorization server
+
+UI <..> AS
+UI <...> RS
+User <..> UI
+
+@enduml
+
+/'
+
+[] 【分离版前端】使用Oauth2获取token及请求资源样例
+client_id;
+'/

@@ -1,0 +1,73 @@
+# 所有的地址来自 AuthorizationServerSettings.builder
+
+# 确认已启动 demo-client:8080 / iam:9000 / messages-resource:8090
+
+### 认证服务端
+GET /version
+HOST: 127.0.0.1:9000
+### 客户端服务端
+GET /version
+HOST: 127.0.0.1:8080
+### 资源服务端
+GET /version
+HOST: 127.0.0.1:8090
+
+
+### 用户登录
+# JSESSIONID 会记录状态 （httpRequests\http-client.cookies）
+POST /login
+HOST: 127.0.0.1:9000
+Content-Type: application/x-www-form-urlencoded
+
+username=user2&password=password
+
+
+### 用户授权
+POST /oauth2/authorize
+HOST: 127.0.0.1:9000
+Content-Type: application/x-www-form-urlencoded
+Authorization: Basic user1 password
+
+response_type=code
+    &client_id=messaging-client
+    &redirect_uri=http://127.0.0.1:8080/login/oauth2/code/messaging-client-oidc
+    &scope=message.read+openid
+    &status=test
+
+# redirect_uri 必须同 sample/config/AuthorizationServerConfig.java:145 一致；
+
+> {%
+    client.test("Content-Type is application/json", () => {
+        const Location = response.headers.valueOf("Location");
+        const code = Location.substring(Location.indexOf("code=")+5,Location.indexOf("&state"))
+        client.log(code);
+        client.global.set("code", code);
+    })
+%}
+
+### 客户端后台发起 authorization_code
+POST /oauth2/token
+HOST: 127.0.0.1:9000
+Content-Type: application/x-www-form-urlencoded
+Authorization: Basic cG0tY2xpZW50OnBtLXNlY3JldA==
+#Authorization: Basic pm-client:pm-secret
+
+client_id=pm-client
+    &client_secret=pm-secret
+    &scope=user_read
+    &code={{code}}
+    &grant_type=authorization_code
+    &redirect_uri=http://127.0.0.1:8080/login/oauth2/code/messaging-client-oidc
+
+> {%
+    client.log(client.global.get("code"));
+    client.log(response.body.access_token)
+    client.global.set("access_token", response.body.access_token);
+%}
+
+### 客户端版本
+POST /messages
+HOST: 127.0.0.1:8090
+Content-Type: application/x-www-form-urlencoded
+Authorization: Bearer {{access_token}}
+#Authorization: Basic user1 password

@@ -1,0 +1,25 @@
+GET http://localhost:7070/oauth2/callback/iam
+
+###
+GET http://127.0.0.1:7070/version
+
+###
+
+
+
+### 客户端版本
+GET /main
+HOST: 127.0.0.1:7070
+Content-Type: application/x-www-form-urlencoded
+#Authorization: Basic user1 password
+
+### 客户端版本
+POST http://127.0.0.1:9000/oauth2/token?code=z3B0UAfK4S8k4qd8VHxzTnHbgwlRZqzQDNVtkGlOe8WafEM2mvNAF0RmDY-VoyDga_XHJkwkc3vTeKxrhMp4xaoj4IIv3rJLrj_p-o0FCquBwqzAxYL7nne9MjB9OSct&grant_type=authorization_code&redirect_uri=http%3A%2F%2F127.0.0.1%3A7070%2Foauth2%2Flogin-iam
+Content-Type: application/x-www-form-urlencoded
+Authorization: Basic cG0tY2xpZW50OnBtLXNlY3JldA==
+
+
+# pm api   token
+#
+#
+#
