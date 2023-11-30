@@ -34,10 +34,11 @@ public class ResourceServerConfig {
 	@Bean
 	SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		http
-			.securityMatcher("/messages/**")
-				.authorizeHttpRequests(registry ->
-						registry.requestMatchers("/messages/**")
-						.hasAuthority("SCOPE_message.read"))
+				.authorizeHttpRequests(authorize ->
+						authorize
+								.requestMatchers("token").permitAll()
+								.anyRequest().authenticated()
+				)
 				.oauth2ResourceServer(configurer -> configurer.jwt(Customizer.withDefaults()));
 		return http.build();
 	}

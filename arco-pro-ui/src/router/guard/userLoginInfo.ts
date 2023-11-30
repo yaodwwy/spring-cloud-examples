@@ -27,17 +27,22 @@ export default function setupUserLoginInfoGuard(router: Router) {
         }
       }
     } else {
-      if (to.name === 'login') {
-        next();
-        return;
-      }
-      next({
-        name: 'login',
-        query: {
-          redirect: to.name,
-          ...to.query,
-        } as LocationQueryRaw,
-      });
+      // if (to.name === 'login') {
+      //   next();
+      //   return;
+      // }
+      // next({
+      //   name: 'login',
+      //   query: {
+      //     redirect: to.name,
+      //     ...to.query,
+      //   } as LocationQueryRaw,
+      // });
+
+      // 未登录状态 跳转到登录页
+      // window.location.href = 'http://localhost:9090/oauth2/authorize?client_id=pm-client&redirect_uri=http://localhost:5173/redirect-uri&response_type=code&scope=read_user+openid&state=IAM';
+
+      next();
     }
   });
 }

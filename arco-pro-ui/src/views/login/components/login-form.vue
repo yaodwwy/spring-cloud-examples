@@ -101,7 +101,10 @@
     if (!errors) {
       setLoading(true);
       try {
-        await userStore.login(values as LoginData);
+        // window.location.href = 'https://gitee.com/oauth/authorize?client_id=b525c76d2f1943c5396f916a9768efa79c94829460e25f84a4da967682f574a6&redirect_uri=http://localhost:5173/redirect-uri&response_type=code';
+        window.location.href = 'http://localhost:9090/oauth2/authorize?client_id=pm-client&redirect_uri=http://localhost:5173/redirect-uri&response_type=code&scope=read_user+openid&state=IAM';
+        return;
+        await userStore.login(formRequestData(values));
         const { redirect, ...othersQuery } = router.currentRoute.value.query;
         router.push({
           name: (redirect as string) || 'Workplace',
