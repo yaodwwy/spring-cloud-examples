@@ -21,6 +21,7 @@ import com.nimbusds.jose.jwk.JWKSet;
 import com.nimbusds.jose.jwk.RSAKey;
 import com.nimbusds.jose.jwk.source.JWKSource;
 import com.nimbusds.jose.proc.SecurityContext;
+import org.springframework.security.oauth2.server.authorization.client.InMemoryRegisteredClientRepository;
 import org.springframework.security.oauth2.server.authorization.settings.TokenSettings;
 import sample.authentication.DeviceClientAuthenticationProvider;
 import sample.federation.FederatedIdentityIdTokenCustomizer;
@@ -101,17 +102,17 @@ public class AuthorizationServerConfig {
 
 		// @formatter:off
 		http.getConfigurer(OAuth2AuthorizationServerConfigurer.class)
-			.deviceAuthorizationEndpoint(deviceAuthorizationEndpoint ->
-				deviceAuthorizationEndpoint.verificationUri("/activate")
-			)
-			.deviceVerificationEndpoint(deviceVerificationEndpoint ->
-				deviceVerificationEndpoint.consentPage(CUSTOM_CONSENT_PAGE_URI)
-			)
-			.clientAuthentication(clientAuthentication ->
-				clientAuthentication
-					.authenticationConverter(deviceClientAuthenticationConverter)
-					.authenticationProvider(deviceClientAuthenticationProvider)
-			)
+//			.deviceAuthorizationEndpoint(deviceAuthorizationEndpoint ->
+//				deviceAuthorizationEndpoint.verificationUri("/activate")
+//			)
+//			.deviceVerificationEndpoint(deviceVerificationEndpoint ->
+//				deviceVerificationEndpoint.consentPage(CUSTOM_CONSENT_PAGE_URI)
+//			)
+//			.clientAuthentication(clientAuthentication ->
+//				clientAuthentication
+//					.authenticationConverter(deviceClientAuthenticationConverter)
+//					.authenticationProvider(deviceClientAuthenticationProvider)
+//			)
 			.authorizationEndpoint(authorizationEndpoint ->
 				authorizationEndpoint.consentPage(CUSTOM_CONSENT_PAGE_URI))
 			.oidc(Customizer.withDefaults());	// Enable OpenID Connect 1.0
@@ -142,8 +143,7 @@ public class AuthorizationServerConfig {
 				.authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
 				.authorizationGrantType(AuthorizationGrantType.REFRESH_TOKEN)
 				.authorizationGrantType(AuthorizationGrantType.CLIENT_CREDENTIALS)
-				.redirectUri("http://127.0.0.1:8080/login/oauth2/code/messaging-client-oidc")
-				.redirectUri("http://127.0.0.1:8080/authorized")
+				.redirectUri("http://localhost:5173/redirect-uri")
 				.postLogoutRedirectUri("http://127.0.0.1:8080/logged-out")
 				.scope(OidcScopes.OPENID)
 				.scope(OidcScopes.PROFILE)
@@ -160,7 +160,7 @@ public class AuthorizationServerConfig {
 				.authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
 				.authorizationGrantType(AuthorizationGrantType.JWT_BEARER)
 				.authorizationGrantType(AuthorizationGrantType.REFRESH_TOKEN)
-				.redirectUri("http://127.0.0.1:7070/oauth2/login-iam")
+				.redirectUri("http://localhost:5173/redirect-uri")
 				.postLogoutRedirectUri("http://127.0.0.1:7070/logged-out")
 				.scope(OidcScopes.OPENID)
 				.scope(OidcScopes.PROFILE)
@@ -177,13 +177,13 @@ public class AuthorizationServerConfig {
 				.scope("message.write")
 				.build();
 
-		// Save registered client's in db as if in-memory
-		JdbcRegisteredClientRepository registeredClientRepository = new JdbcRegisteredClientRepository(jdbcTemplate);
-		registeredClientRepository.save(registeredClient);
-		registeredClientRepository.save(pmClient);
-		registeredClientRepository.save(deviceClient);
-
-		return registeredClientRepository;
+//		// Save registered client's in db as if in-memory
+//		JdbcRegisteredClientRepository registeredClientRepository = new JdbcRegisteredClientRepository(jdbcTemplate);
+//		registeredClientRepository.save(registeredClient);
+//		registeredClientRepository.save(pmClient);
+//		registeredClientRepository.save(deviceClient);
+		InMemoryRegisteredClientRepository inMemoryRegisteredClientRepository = new InMemoryRegisteredClientRepository(pmClient);
+		return inMemoryRegisteredClientRepository;
 	}
 	// @formatter:on
 

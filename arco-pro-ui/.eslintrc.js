@@ -2,7 +2,7 @@
 const path = require('path');
 
 module.exports = {
-  root: true,
+  root: false,
   parser: 'vue-eslint-parser',
   parserOptions: {
     // Parser that checks the content of the <script> tag

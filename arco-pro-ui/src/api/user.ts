@@ -14,6 +14,14 @@ export function login(data: LoginData) {
   return axios.post<LoginRes>('/api/user/login', data);
 }
 
+export function getToken1(params) {
+  return axios.get<LoginRes>('/cpi/token', {params});
+}
+
+export function getUser1(params) {
+  return axios.get<LoginRes>('/cpi/api/v5/user', {params});
+}
+
 export function logout() {
   return axios.post<LoginRes>('/api/user/logout');
 }
