@@ -1,5 +1,13 @@
 server:
   port: 8080
+  servlet:
+    session:
+      timeout: 30
+      cookie:
+        name: example
+        http-only: false
+        domain: example.com
+  address: demo.example.com
 
 logging:
   level:
@@ -9,6 +17,11 @@ logging:
     org.springframework.security.oauth2: INFO
 
 spring:
+  data:
+    redis:
+      host: host.docker.internal
+      password: ${REDIS_PASS}
+      database: 9
   thymeleaf:
     cache: false
   security:
@@ -47,7 +60,9 @@ spring:
             client-name: messaging-client-device-code
         provider:
           spring:
-            issuer-uri: http://localhost:9000
+            issuer-uri: http://iam.example.com:9000
 
 messages:
   base-uri: http://127.0.0.1:8090/messages
+
+

@@ -18,10 +18,17 @@
     org/springframework/security/core/userdetails/jdbc/users.ddl
 
 ### 项目说明
-
 内容与spring-authorization-server\samples\demo-authorizationserver 一致
 
-justAuth 参考：https://github.com/justauth/JustAuth-demo
+需要 host 
+
+          'example.com': '127.0.0.1'
+          'demo.example.com': '127.0.0.1'
+          'iam.example.com': '127.0.0.1'
+
+
+参考资源：
+justAuth：https://github.com/justauth/JustAuth-demo
 
     计划扩展自定义用户源与客户端源
 
@@ -29,3 +36,5 @@ justAuth 参考：https://github.com/justauth/JustAuth-demo
 2. [x] 正在尝试通过 justAuth 集成到 iam
 3. [x] 已完成集成pm justAuth iam
 4. [x] 正在集成justAuth aliyun 登录
+
+

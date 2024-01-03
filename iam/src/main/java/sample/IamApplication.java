@@ -17,12 +17,14 @@ package sample;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisHttpSession;
 
 /**
  *
  * @since 2023/11/1 10:24
  * @author Adam 2023/11/1 10:24 说明:
  */
+@EnableRedisHttpSession
 @SpringBootApplication
 public class IamApplication {
 

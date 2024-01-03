@@ -31,12 +31,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final ExtendAuthenticationSecurityConfig extendAuthenticationSecurityConfig;
 //    private final SimpleUrlAuthenticationSuccessHandler simpleUrlAuthenticationSuccessHandler;
-    private final LogoutSuccessHandler logoutSuccessHandler;
+//    private final LogoutSuccessHandler logoutSuccessHandler;
 
-    public WebSecurityConfig(ExtendAuthenticationSecurityConfig extendAuthenticationSecurityConfig, LogoutSuccessHandler logoutSuccessHandler) {
+    public WebSecurityConfig(ExtendAuthenticationSecurityConfig extendAuthenticationSecurityConfig) {
         this.extendAuthenticationSecurityConfig = extendAuthenticationSecurityConfig;
 //        this.simpleUrlAuthenticationSuccessHandler = simpleUrlAuthenticationSuccessHandler;
-        this.logoutSuccessHandler = logoutSuccessHandler;
+//        this.logoutSuccessHandler = logoutSuccessHandler;
     }
 
     @Override
@@ -69,19 +69,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
                 // 针对不带有 Authorization Header的请求匹配器的请求进行认证
                 .requestMatchers(negatedRequestMatcher).authenticated()
-                // 对于其他任何请求都进行认证
+                .and()
+                .logout().logoutSuccessUrl("http://iam.example.com:9000/logout")
+                .and()
+                .authorizeRequests()
                 .anyRequest().authenticated()
                 .and()
-//                .formLogin().successHandler(simpleUrlAuthenticationSuccessHandler)
-//                .and()
-                .logout().logoutUrl("/logout").logoutSuccessHandler(logoutSuccessHandler)
-                .clearAuthentication(true).invalidateHttpSession(true).logoutSuccessUrl("/sign-out")
-//                .and()
-//                .oauth2Login().loginPage("/login-iam").successHandler(simpleUrlAuthenticationSuccessHandler)
-//                .and()
-//                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.NEVER)
-//                .and()
-//                .httpBasic()
+                .csrf().disable()
         ;
 
     }

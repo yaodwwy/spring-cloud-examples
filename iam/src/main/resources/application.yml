@@ -1,5 +1,13 @@
 server:
   port: 9000
+  servlet:
+    session:
+      timeout: 30
+      cookie:
+        name: example
+        http-only: false
+        domain: example.com
+  address: iam.example.com
 
 spring:
   security:
@@ -28,7 +36,16 @@ spring:
             user-name-attribute: login
   thymeleaf:
     cache: false
+  session:
+    redis:
+      namespace: spring:session
+      flush-mode: on_save
 
+  data:
+    redis:
+      host: host.docker.internal
+      password: ${REDIS_PASS}
+      database: 9
 logging:
   level:
     root: INFO

@@ -1,5 +1,11 @@
 server:
   port: 7070
+  servlet:
+    session:
+      cookie:
+        name: example
+        http-only: false
+        domain: example.com
 
 logging:
   level:
