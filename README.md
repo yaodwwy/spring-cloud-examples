@@ -33,8 +33,11 @@ justAuth：https://github.com/justauth/JustAuth-demo
     计划扩展自定义用户源与客户端源
 
 1. [x] demo-pm 是以前的旧项目
-2. [x] 正在尝试通过 justAuth 集成到 iam
-3. [x] 已完成集成pm justAuth iam
-4. [x] 正在集成justAuth aliyun 登录
-
-
+3. [x] iam
+4. [ ] aliyun 登录
+5. [ ] SkyWalking 集成
+6. [ ] Sentinel 集成
+7. [ ] seata
+8. [ ] xxl job
+9. [ ] flowable7
+10. [ ] jasper report
