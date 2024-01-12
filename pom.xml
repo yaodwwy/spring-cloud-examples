@@ -17,6 +17,8 @@
     <modules>
         <module>iam</module>
         <module>eureka</module>
+        <module>common</module>
+        <module>demo-pm</module>
         <module>demo-client</module>
         <module>demo-backend</module>
         <module>messages-resource</module>

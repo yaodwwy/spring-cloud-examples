@@ -33,8 +33,9 @@ justAuth：https://github.com/justauth/JustAuth-demo
     计划扩展自定义用户源与客户端源
 
 1. [x] demo-pm 是以前的旧项目
+2. [x] eureka
 3. [x] iam
-4. [ ] aliyun 登录
+4. [x] aliyun 登录
 5. [ ] SkyWalking 集成
 6. [ ] Sentinel 集成
 7. [ ] seata
