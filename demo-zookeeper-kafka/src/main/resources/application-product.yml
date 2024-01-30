@@ -1,0 +1,11 @@
+# product 生产环境
+
+spring:
+  config:
+    activate:
+      on-profile: product
+
+logging:
+  level:
+    root: warn
+    # 自定义日志级别

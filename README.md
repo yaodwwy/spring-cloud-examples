@@ -27,6 +27,15 @@
           'iam.example.com': '127.0.0.1'
 
 
+[demo-zookeeper-kafka](demo-zookeeper-kafka) 项目需要如下host:
+
+          'bitnami-zookeeper.kube-public.svc.cluster.local': '127.0.0.1'
+          'bitnami-kafka-dev.kube-public.svc.cluster.local': '127.0.0.1'
+
+
+
+
+
 参考资源：
 justAuth：https://github.com/justauth/JustAuth-demo
 

@@ -1,0 +1,46 @@
+logging:
+  logback:
+    rollingpolicy:
+      max-history: 365
+      clean-history-on-start: true
+      file-name-pattern: /logs/%d{yyyy-MM-dd}/${spring.profiles.active}-${spring.cloud.client.hostname}.%d{HHmmss}.%i.log
+  file:
+    path: /logs
+    name: /logs/${spring.profiles.active}-${spring.cloud.client.hostname}.log
+
+management.endpoints.web:
+  exposure.include: '*'
+  cors:
+    allowed-origins: '*'
+    allowed-methods: '*'
+
+spring:
+  profiles:
+    active: dev
+  application:
+    name: demo-zookeeper-kafka
+  # 请勿修改 请正确编码及设置bean的主次 避免直接重复声明再覆盖占用系统资源
+  main.allow-bean-definition-overriding: false
+  kafka:
+    bootstrap-servers: bitnami-kafka-${spring.profiles.active}.kube-public.svc.cluster.local:9092
+  cloud:
+    zookeeper:
+      connect-string: bitnami-zookeeper.kube-public.svc.cluster.local:2181
+      discovery:
+        root: /spring-cloud-${spring.profiles.active}/services
+        instance-host: ${spring.application.name}
+    stream:
+      kafka.binder.replication-factor: 3
+      bindings:
+        springCloudBusInput:
+          group: ${spring.cloud.bus.id}
+          destination: ${spring.cloud.bus.destination}
+        springCloudBusOutput:
+          group: ${spring.cloud.bus.id}
+          destination: ${spring.cloud.bus.destination}
+    bus:
+      id: ${spring.application.name}-${spring.profiles.active}
+      destination: springCloudBus-${spring.profiles.active}
+  jackson:
+    time-zone: GMT+8
+    date-format: yyyy-MM-dd HH:mm:ss

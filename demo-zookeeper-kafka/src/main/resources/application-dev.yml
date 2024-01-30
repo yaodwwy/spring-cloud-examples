@@ -1,0 +1,16 @@
+# dev 多人开发 使用user.name分开服务目录
+spring:
+  config:
+    activate:
+      on-profile: dev
+  cloud:
+    zookeeper:
+      discovery.root: /spring-cloud-${spring.profiles.active}/${user.name}/services
+    stream:
+      kafka.binder.replication-factor: 1
+    bus:
+      id: ${user.name}-${spring.application.name}-${spring.profiles.active}
+      destination: ${user.name}-springCloudBus-${spring.profiles.active}
+
+trace: false # 根据情况开启跟踪
+debug: true

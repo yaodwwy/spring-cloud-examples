@@ -1,0 +1,14 @@
+# test 测试环境
+
+spring:
+  config:
+    activate:
+      on-profile: test
+
+logging:
+  logback:
+    rollingpolicy:
+      max-history: 7
+  level:
+    root: info
+    # 自定义日志级别
