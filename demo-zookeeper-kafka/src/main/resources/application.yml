@@ -23,6 +23,7 @@ spring:
   main.allow-bean-definition-overriding: false
   kafka:
     bootstrap-servers: bitnami-kafka-${spring.profiles.active}.kube-public.svc.cluster.local:9092
+    consumer.group-id: ${spring.profiles.active}-consumer-group-${spring.application.name}
   cloud:
     zookeeper:
       connect-string: bitnami-zookeeper.kube-public.svc.cluster.local:2181
