@@ -1,0 +1,23 @@
+logging:
+  logback:
+    rollingpolicy:
+      clean-history-on-start: true
+      max-history: 7
+      file-name-pattern: /logs/%d{yyyy-MM-dd}/${spring.profiles.active}-${spring.cloud.client.hostname}.%d{HHmmss}.%i.log
+      max-file-size: 10KB
+  file:
+    path: /logs
+    name: /logs/${spring.profiles.active}-${spring.cloud.client.hostname}.log
+
+management.endpoints.web:
+  exposure.include: '*'
+  cors:
+    allowed-origins: '*'
+    allowed-methods: '*'
+
+debug: true
+trace: true
+
+spring:
+  application:
+    name: demo-logs-config

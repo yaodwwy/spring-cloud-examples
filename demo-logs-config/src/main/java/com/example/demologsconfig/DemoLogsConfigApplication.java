@@ -24,10 +24,11 @@ public class DemoLogsConfigApplication implements CommandLineRunner {
     @Async
     public void run(String... args) throws InterruptedException {
         Runnable runnable = () -> {
+            String str = "";
             for (;;) {
-                log.info("public class config implements CommandLineRunner " + LocalDateTime.now());
+                str += "public class config implements CommandLineRunner " + LocalDateTime.now();
                 try {
-                    Thread.sleep(20);
+                    Thread.sleep(1);
                 } catch (InterruptedException ignored) {
                 }
             }

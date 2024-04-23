@@ -11,8 +11,6 @@ spring:
     bus:
       id: ${user.name}-${spring.application.name}-${spring.profiles.active}
       destination: ${user.name}-springCloudBus-${spring.profiles.active}
-  kafka:
-    consumer.group-id: ${user.name}-${spring.application.name}-${spring.profiles.active}-consumer-group
 
 trace: false # 根据情况开启跟踪
 debug: true
