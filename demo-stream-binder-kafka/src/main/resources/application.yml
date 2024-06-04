@@ -1,0 +1,30 @@
+spring:
+  application.name: demo
+  kafka:
+    bootstrap-servers: host.docker.internal:9092
+  cloud:
+    function:
+      definition: personConsumer;auditLog
+    stream:
+      bindings:
+#        https://www.ideas2it.com/blogs/spring-cloud-streams-using-function-based-model#configuring-producer-service
+        consumer-in:
+          destination: consumer
+          group: ${spring.application.name}-dev
+        consumer-out:
+          destination: consumer
+          group: ${spring.application.name}-dev
+        audit-in:
+          destination: audit
+          group: ${spring.application.name}-dev
+          consumer.maxAttempts: 1
+        audit-out:
+          destination: audit
+          group: ${spring.application.name}-dev
+      function:
+        bindings:
+          auditLog-in-0: audit-in
+          auditLog-out-0: audit-out
+          personConsumer-in-0: consumer-in
+          personConsumer-out-0: consumer-out
+

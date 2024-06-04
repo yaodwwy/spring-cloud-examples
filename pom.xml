@@ -22,6 +22,8 @@
         <module>demo-session-client</module>
         <module>demo-backend</module>
         <module>messages-resource</module>
+
+        <module>demo-stream-binder-kafka</module>
     </modules>
 
 </project>
